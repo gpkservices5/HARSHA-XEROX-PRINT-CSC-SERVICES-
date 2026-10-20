@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123c2b">
+<title>HARSHA ENTERPRISES | Xerox and Printing</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--g:#123c2b;--gold:#e6c66b;--bg:#f3f7f4;--line:#dce5de}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#18231d;font-family:system-ui,Arial,sans-serif}
+header{background:linear-gradient(135deg,#123c2b,#236b4b);color:#fff;padding:24px 18px 28px;border-radius:0 0 25px 25px}.brand{max-width:760px;margin:auto;display:flex;gap:14px;align-items:center}.logo{height:62px;width:62px;border:2px solid var(--gold);border-radius:16px;display:grid;place-items:center;font-size:30px}h1{font-size:clamp(21px,5vw,29px);line-height:1.15;margin:0 0 5px}.tag{color:#f6e9bd;font-size:14px}main{max-width:760px;margin:18px auto;padding:0 14px 35px}.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:16px;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.tile{background:#f8faf8;border:1px solid var(--line);border-radius:13px;padding:13px}.tile b{display:block;margin:6px 0 3px}.small{font-size:12px;line-height:1.5;color:#65736a}.field{margin:12px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}input,select,textarea{width:100%;padding:12px;border:1px solid #c9d6cd;border-radius:10px;font:inherit;background:white}input[type=file]{font-size:13px;padding:9px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{display:block;width:100%;border:0;border-radius:11px;padding:13px 14px;background:var(--g);color:white;font-weight:750;font-size:14px;text-align:center;text-decoration:none;cursor:pointer}.btn.alt{background:#e8f1eb;color:var(--g);border:1px solid #cbded0}.wa{background:#146c43}.notice{background:#fff7dc;border:1px solid #ead99b;border-radius:12px;padding:12px;font-size:13px;line-height:1.5}.status{padding:10px 0;border-bottom:1px solid #edf1ed}.pill{display:inline-block;background:#fff1c6;color:#705713;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:800}footer{text-align:center;padding:10px 15px 25px;color:#65736a;font-size:12px}@media(max-width:470px){.row{grid-template-columns:1fr}.panel{padding:13px}}
+</style></head><body>
+<header><div class="brand"><div class="logo">🖨️</div><div><h1>HARSHA ENTERPRISES</h1><div class="tag">XEROX AND PRINTING</div><div style="font-size:12px;margin-top:7px">SCAN • SEND • PRINT</div></div></div></header>
+<main>
+<div class="notice"><b>Welcome!</b> Prepare your print request here, then open WhatsApp to send it to the shop. For privacy, only choose documents you want printed.</div>
+<div class="grid">
+<div class="tile">📄 <b>PDF documents</b><span class="small">Forms, certificates and files</span></div>
+<div class="tile">🖼️ <b>Photos</b><span class="small">JPG, PNG and image files</span></div>
+<div class="tile">📝 <b>Word documents</b><span class="small">DOC and DOCX files</span></div>
+<div class="tile">📋 <b>Order reference</b><span class="small">Keep your request ID for follow-up</span></div>
+</div>
+<section class="panel" style="margin-top:14px"><h2>Prepare a print request</h2>
+<form id="f">
+<div class="row"><div class="field"><label for="name">Customer name</label><input id="name" required placeholder="Your name"></div><div class="field"><label for="mobile">Your mobile number</label><input id="mobile" required inputmode="tel" placeholder="Mobile number"></div></div>
+<div class="field"><label for="files">Choose files</label><input id="files" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,application/pdf,image/*"><div id="filelist" class="small">No files selected.</div></div>
+<div class="row"><div class="field"><label for="kind">Print type</label><select id="kind"><option>Black & White</option><option>Colour</option><option>Photo print</option><option>Ask at shop</option></select></div><div class="field"><label for="copies">Copies</label><input id="copies" type="number" min="1" max="500" value="1" required></div></div>
+<div class="field"><label for="notes">Instructions</label><textarea id="notes" rows="2" placeholder="A4, page range, single/double side..."></textarea></div>
+<div class="field"><label for="dest">Send request to</label><select id="dest"><option value="918328440574">Shop WhatsApp 1 (+91 83284 40574)</option><option value="919493442938">Shop WhatsApp 2 (+91 94934 42938)</option></select></div>
+<button class="btn wa" type="submit">Continue to WhatsApp</button>
+</form>
+<div id="result" style="margin-top:12px" aria-live="polite"></div>
+<p class="small">WhatsApp will open with your order details. You must attach the selected files in WhatsApp and press Send. This page cannot upload files or attach them automatically.</p>
+</section>
+<section class="panel"><h2>Order status</h2><p class="small">Save the order reference shown after preparing your request. Live shared status requires a secure database and a shop-side order management page; this static version does not synchronize order statuses.</p><div id="orders"></div><button class="btn alt" id="clear" type="button" style="margin-top:10px">Clear local order history</button></section>
+<section class="panel"><h2>Shop QR code</h2><p class="small">After publishing this website on an HTTPS address, create a QR code pointing to that final public URL. The QR code cannot be finalized before the website address is known.</p><button class="btn alt" id="copy" type="button">Copy this page address</button><p id="copied" class="small"></p></section>
+</main><footer>HARSHA ENTERPRISES • XEROX AND PRINTING<br>Customer print request service</footer>
+<script>
+const $=x=>document.getElementById(x);
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('files').addEventListener('change',()=>{$('filelist').textContent=[...$('files').files].map(f=>f.name+' ('+Math.ceil(f.size/1024)+' KB)').join(' • ')||'No files selected.'});
+function orders(){try{return JSON.parse(localStorage.getItem('heOrders')||'[]')}catch(e){return []}}
+function draw(){let a=orders();$('orders').innerHTML=a.length?a.map(o=>'<div class="status"><b>'+esc(o.id)+'</b> <span class="pill">Prepared locally</span><div class="small">'+esc(o.date)+' • '+esc(o.name)+' • '+o.files.length+' file(s)</div></div>').join(''):'<p class="small">No local requests yet.</p>'}
+$('f').addEventListener('submit',e=>{e.preventDefault();let fs=[...$('files').files];if(!fs.length){alert('Please select at least one file.');return}let o={id:'HE'+Date.now().toString().slice(-8),name:$('name').value.trim(),mobile:$('mobile').value.trim(),files:fs.map(f=>f.name),kind:$('kind').value,copies:$('copies').value,notes:$('notes').value,date:new Date().toLocaleString()};let a=orders();a.unshift(o);localStorage.setItem('heOrders',JSON.stringify(a));draw();let msg='HARSHA ENTERPRISES - XEROX AND PRINTING%0AOrder reference: '+encodeURIComponent(o.id)+'%0ACustomer: '+encodeURIComponent(o.name)+'%0ACustomer mobile: '+encodeURIComponent(o.mobile)+'%0AFiles to attach: '+encodeURIComponent(o.files.join(', '))+'%0APrint type: '+encodeURIComponent(o.kind)+'%0ACopies: '+encodeURIComponent(o.copies)+'%0AInstructions: '+encodeURIComponent(o.notes||'None')+'%0A%0AI will attach the files in this WhatsApp chat.';let url='https://wa.me/'+$('dest').value+'?text='+msg;$('result').innerHTML='<div class="notice"><b>Order reference: '+esc(o.id)+'</b><br>WhatsApp is opening. Attach '+fs.length+' selected file(s) in the chat and tap Send. This reference is saved only in this browser.</div><a class="btn wa" style="margin-top:10px" target="_blank" rel="noopener" href="'+url+'">Open WhatsApp again</a>';window.open(url,'_blank','noopener');});
+$('clear').addEventListener('click',()=>{if(confirm('Clear order history saved in this browser?')){localStorage.removeItem('heOrders');draw()}});
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);$('copied').textContent='Page address copied.'}catch(e){$('copied').textContent=location.href}});
+draw();
+</script></body></html>
